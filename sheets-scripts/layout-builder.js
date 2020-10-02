@@ -30,7 +30,7 @@ function refreshLayoutStripWidths() {
       col <= colCount;
       col++
     ) {
-      let msg = `${now()}: `
+      let msg = ''
       const inches = getRowColVal(WIDTHS_ROW, col)
       if (inches) {
         const pixels = inches * pixelsPerInch
@@ -39,7 +39,7 @@ function refreshLayoutStripWidths() {
       } else {
         msg += 'no width. '
       }
-      logToCol(col, msg)
+      logToCol(col, msg + ` (${now()})`)
     }
 
     /// ROWS:
@@ -50,7 +50,7 @@ function refreshLayoutStripWidths() {
       row <= rowCount;
       row++
     ) {
-      let msg = `${now()}: `
+      let msg = ''
       const inches = getRowColVal(WIDTHS_COL, row)
       if (inches) {
         const pixels = inches * pixelsPerInch
@@ -59,7 +59,7 @@ function refreshLayoutStripWidths() {
       } else {
         msg += 'no width. '
       }
-      logToRow(row, msg)
+      logToRow(row, msg + ` (${now()})`)
     }
   })
 }
