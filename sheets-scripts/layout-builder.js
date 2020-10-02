@@ -5,7 +5,7 @@ const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
-const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYOUT:'
+const LAYOUT_SHEET_NAME_MATCH_STR = 'DESIGN:'
 const MIN_WIDTH = 21
 
 // eslint-disable-next-line
@@ -44,7 +44,7 @@ function refreshLayoutStripWidths() {
     // eslint-disable-next-line
     alert(
       `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
-    )
+    ) // doesn't work... but at least throws an error msg haha
   }
 }
 
