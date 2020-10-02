@@ -30,12 +30,16 @@ function refreshLayoutStripWidths() {
       col <= colCount;
       col++
     ) {
+      let msg = ''
       const inches = getRowColVal(WIDTHS_ROW, col)
       if (inches) {
         const pixels = inches * pixelsPerInch
         sheet.setColumnWidth(col, pixels)
+        msg += `inches: ${inches}`
+      } else {
+        msg += 'no width'
       }
-      logToCol(col, `inches: ${inches}`)
+      logToCol(col, msg)
     }
 
     /// ROWS:
@@ -46,12 +50,16 @@ function refreshLayoutStripWidths() {
       row <= rowCount;
       row++
     ) {
+      let msg = ''
       const inches = getRowColVal(WIDTHS_COL, row)
       if (inches) {
         const pixels = inches * pixelsPerInch
         sheet.setRowHeight(row, pixels)
+        msg += `inches: ${inches}`
+      } else {
+        msg += 'no width'
       }
-      logToRow(row, `inches: ${inches}`)
+      logToRow(row, msg)
     }
   })
 }
