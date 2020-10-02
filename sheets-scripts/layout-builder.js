@@ -1,5 +1,4 @@
 /* shim for gsheets. todo = add eslint exception */ if ('undefined' === typeof SpreadsheetApp) { var SpreadsheetApp = {}} //prettier-ignore
-const SSA = SpreadsheetApp
 const WIDTHS_ROW = 9
 const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
@@ -20,6 +19,11 @@ function onOpen() {
     },
   ]
   ss.addMenu('REFRESH!', entries)
+
+  SpreadsheetApp.getUi() // Or DocumentApp or SlidesApp or FormApp.
+    .createMenu('Custom Menu')
+    .addItem('Show alert', 'showAlert')
+    .addToUi()
 }
 
 // eslint-disable-next-line
@@ -31,7 +35,7 @@ function refreshLayoutStripWidths() {
 
   // layoutSheets.forEach()
 
-  const sheet = SSA.getActiveSheet()
+  const sheet = SpreadsheetApp.getActiveSheet()
 
   if (sheet.getName().match(LAYOUT_SHEET_NAME_MATCH_STR)) {
     refreshSheetLayoutStripWidths(sheet)
@@ -118,4 +122,26 @@ function SheetHelpers(sheet) {
 
 function now() {
   return `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
+}
+
+function onOpen() {}
+
+// eslint-disable-next-line
+function showAlert() {
+  var ui = SpreadsheetApp.getUi() // Same variations.
+
+  var result = ui.alert(
+    'Please confirm',
+    'Are you sure you want to continue?',
+    ui.ButtonSet.YES_NO
+  )
+
+  // Process the user's response.
+  if (result == ui.Button.YES) {
+    // User clicked "Yes".
+    ui.alert('Confirmation received.')
+  } else {
+    // User clicked "No" or X in the title bar.
+    ui.alert('Permission denied.')
+  }
 }
