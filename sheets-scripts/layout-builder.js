@@ -58,10 +58,12 @@ function refreshSheetLayoutStripWidths(sheet) {
 
   const pixelsPerInch = getA1Val(A1_pixelsPerInch)
 
-  const numFrozenCols = sheet.getFrozenColumns()
+  const rowCount = sheet.getMaxRows()
   const colCount = sheet.getMaxColumns()
+  const numFrozenRows = sheet.getFrozenRows()
+  const numFrozenCols = sheet.getFrozenColumns()
 
-  /// COLUMNS:
+  /// C O L U M N S :
   for (
     let col = numFrozenCols + 1;
     col <= colCount;
@@ -82,12 +84,18 @@ function refreshSheetLayoutStripWidths(sheet) {
     msg += `pixels: ${pixels}. `
     /// END SAME!!!!!!!!!!! ///
     sheet.setColumnWidth(col, pixels)
+    sheet
+      .getRange({
+        row: numFrozenRows + 1,
+        column: col,
+        numRows: rowCount - numFrozenRows,
+        numColumns: 1,
+      })
+      .setTextRotation(-90)
     logToCol(col, msg)
   }
 
-  /// ROWS:
-  const numFrozenRows = sheet.getFrozenRows()
-  const rowCount = sheet.getMaxRows()
+  /// R O W S :
   for (
     let row = numFrozenRows + 1;
     row <= rowCount;
