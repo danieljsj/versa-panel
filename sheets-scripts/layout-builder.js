@@ -2,7 +2,7 @@ if ('undefined' === typeof SpreadsheetApp) { var SpreadsheetApp = {}} //prettier
 
 const WIDTHS_ROW_NUM = 9
 const WIDTHS_COL_NUM = 9
-const SCALE_A1 = [9, 1]
+const A1_pixelsPerInch = 'H6'
 
 // eslint-disable-next-line
 function refreshLayoutStripWidths() {
@@ -14,18 +14,18 @@ function refreshLayoutStripWidths() {
     const { getA1Val, getRowColVal } = new SheetHelpers(
       sheet
     )
-    const scale = getA1Val(...SCALE_A1)
+    const pixelsPerInch = getA1Val(...A1_pixelsPerInch)
 
     const colCount = sheet.getMaxColumns()
     for (let colNum = 1; colNum <= colCount; colNum++) {
       const colInches = getRowColVal(WIDTHS_ROW_NUM, colNum)
-      const colPixels = colInches * scale
+      const colPixels = colInches * pixelsPerInch
       sheet.setColumnWidth(colNum, colPixels)
     }
     const rowCount = sheet.getMaxRows()
     for (let rowNum = 1; rowNum <= rowCount; rowNum++) {
       const rowInches = getRowColVal(WIDTHS_COL_NUM, rowNum)
-      const rowPixels = rowInches * scale
+      const rowPixels = rowInches * pixelsPerInch
       sheet.setColumnWidth(rowNum, rowPixels)
     }
   })
