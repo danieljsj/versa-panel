@@ -51,7 +51,7 @@ function refreshLayoutStripWidths() {
       row++
     ) {
       let msg = ''
-      const inches = getRowColVal(WIDTHS_COL, row)
+      const inches = getRowColVal(row, WIDTHS_COL)
       if (inches) {
         const pixels = inches * pixelsPerInch
         sheet.setRowHeight(row, pixels)
