@@ -14,7 +14,7 @@ function refreshLayoutStripWidths() {
     const { getA1Val, getRowColVal } = new SheetHelpers(
       sheet
     )
-    const pixelsPerInch = getA1Val(...A1_pixelsPerInch)
+    const pixelsPerInch = getA1Val(A1_pixelsPerInch)
 
     const numFrozenCols = sheet.getFrozenColumns()
     const colCount = sheet.getMaxColumns()
@@ -25,9 +25,11 @@ function refreshLayoutStripWidths() {
       colNum <= colCount;
       colNum++
     ) {
-      const colInches = getRowColVal(WIDTHS_ROW_NUM, colNum)
-      const colPixels = colInches * pixelsPerInch
-      sheet.setColumnWidth(colNum, colPixels)
+      const inches = getRowColVal(WIDTHS_ROW_NUM, colNum)
+      if (inches) {
+        const pixels = inches * pixelsPerInch
+        sheet.setColumnWidth(colNum, pixels)
+      }
     }
 
     /// ROWS:
@@ -38,9 +40,11 @@ function refreshLayoutStripWidths() {
       rowNum <= rowCount;
       rowNum++
     ) {
-      const rowInches = getRowColVal(WIDTHS_COL_NUM, rowNum)
-      const rowPixels = rowInches * pixelsPerInch
-      sheet.setColumnWidth(rowNum, rowPixels)
+      const inches = getRowColVal(WIDTHS_COL_NUM, rowNum)
+      if (inches) {
+        const pixels = inches * pixelsPerInch
+        sheet.setRowHeight(rowNum, pixels)
+      }
     }
   })
 }
