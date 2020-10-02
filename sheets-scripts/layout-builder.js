@@ -4,6 +4,7 @@ const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'H6'
+const DEFAULT_CELL_INCHES = 3.5
 
 // eslint-disable-next-line
 function refreshLayoutStripWidths() {
@@ -31,15 +32,18 @@ function refreshLayoutStripWidths() {
       col++
     ) {
       let msg = ''
-      const inches = getRowColVal(WIDTHS_ROW, col)
+      let inches = getRowColVal(WIDTHS_ROW, col)
+      /// SAME ///
       if (inches) {
-        const pixels = inches * pixelsPerInch
-        sheet.setColumnWidth(col, pixels)
         msg += `inches: ${inches}. `
         msg += `pixels: ${pixels}. `
       } else {
         msg += 'no width. '
+        inches = DEFAULT_CELL_INCHES
       }
+      /// END SAME ///
+      const pixels = inches * pixelsPerInch
+      sheet.setColumnWidth(col, pixels)
       logToCol(col, msg + ` (${now()})`)
     }
 
@@ -52,15 +56,18 @@ function refreshLayoutStripWidths() {
       row++
     ) {
       let msg = ''
-      const inches = getRowColVal(row, WIDTHS_COL)
+      let inches = getRowColVal(row, WIDTHS_COL)
+      /// SAME ///
       if (inches) {
-        const pixels = inches * pixelsPerInch
-        sheet.setRowHeight(row, pixels)
         msg += `inches: ${inches}. `
         msg += `pixels: ${pixels}. `
       } else {
         msg += 'no width. '
+        inches = DEFAULT_CELL_INCHES
       }
+      /// END SAME ///
+      const pixels = inches * pixelsPerInch
+      sheet.setRowHeight(row, pixels)
       logToRow(row, msg + ` (${now()})`)
     }
   })
