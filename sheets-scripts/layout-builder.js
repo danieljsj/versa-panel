@@ -1,10 +1,33 @@
 /* shim for gsheets. todo = add eslint exception */ if ('undefined' === typeof SpreadsheetApp) { var SpreadsheetApp = {}} //prettier-ignore
+const SSA = SpreadsheetApp
 const WIDTHS_ROW = 9
 const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
+const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYOUT:'
+
+// eslint-disable-next-line
+function refreshLayoutStripWidths() {
+  // // just going to do one for now.
+  // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
+  //   .getSheets()
+  //   .filter((sheet) => sheet.getName().match(/LAYOUT:/))
+
+  // layoutSheets.forEach()
+
+  const sheet = SSA.getActiveSheet()
+
+  if (sheet.getName().match(LAYOUT_SHEET_NAME_MATCH_STR)) {
+    refreshSheetLayoutStripWidths(sheet)
+  } else {
+    // eslint-disable-next-line
+    alert(
+      `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
+    )
+  }
+}
 
 // eslint-disable-next-line
 function onOpen() {
@@ -18,18 +41,6 @@ function onOpen() {
     },
   ]
   ss.addMenu('REFRESH!', entries)
-}
-
-// eslint-disable-next-line
-function refreshLayoutStripWidths() {
-  // // just going to do one for now.
-  // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
-  //   .getSheets()
-  //   .filter((sheet) => sheet.getName().match(/LAYOUT:/))
-
-  // layoutSheets.forEach()
-
-  refreshSheetLayoutStripWidths(sheet)
 }
 
 function refreshSheetLayoutStripWidths(sheet) {
