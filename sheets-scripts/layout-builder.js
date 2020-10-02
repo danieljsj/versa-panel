@@ -16,14 +16,28 @@ function refreshLayoutStripWidths() {
     )
     const pixelsPerInch = getA1Val(...A1_pixelsPerInch)
 
+    const numFrozenCols = sheet.getFrozenColumns()
     const colCount = sheet.getMaxColumns()
-    for (let colNum = 1; colNum <= colCount; colNum++) {
+
+    /// COLUMNS:
+    for (
+      let colNum = numFrozenCols + 1;
+      colNum <= colCount;
+      colNum++
+    ) {
       const colInches = getRowColVal(WIDTHS_ROW_NUM, colNum)
       const colPixels = colInches * pixelsPerInch
       sheet.setColumnWidth(colNum, colPixels)
     }
+
+    /// ROWS:
+    const numFrozenRows = sheet.getFrozenRows()
     const rowCount = sheet.getMaxRows()
-    for (let rowNum = 1; rowNum <= rowCount; rowNum++) {
+    for (
+      let rowNum = numFrozenRows + 1;
+      rowNum <= rowCount;
+      rowNum++
+    ) {
       const rowInches = getRowColVal(WIDTHS_COL_NUM, rowNum)
       const rowPixels = rowInches * pixelsPerInch
       sheet.setColumnWidth(rowNum, rowPixels)
@@ -42,7 +56,7 @@ function onOpen() {
       functionName: 'refreshLayoutStripWidths',
     },
   ]
-  ss.addMenu('Refresh Layout Widths', entries)
+  ss.addMenu('REFRESH!', entries)
 }
 
 function SheetHelpers(sheet) {
