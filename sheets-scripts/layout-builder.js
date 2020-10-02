@@ -1,7 +1,8 @@
-if ('undefined' === typeof SpreadsheetApp) { var SpreadsheetApp = {}} //prettier-ignore
-
-const WIDTHS_ROW_NUM = 9
-const WIDTHS_COL_NUM = 9
+/* shim for gsheets. todo = add eslint exception */ if ('undefined' === typeof SpreadsheetApp) { var SpreadsheetApp = {}} //prettier-ignore
+const WIDTHS_ROW = 9
+const WIDTHS_COL = WIDTHS_ROW
+const LOG_ROW = 7
+const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'H6'
 
 // eslint-disable-next-line
@@ -11,9 +12,13 @@ function refreshLayoutStripWidths() {
     .filter((sheet) => sheet.getName().match(/^LAYOUT:/))
 
   layoutSheets.forEach((sheet) => {
-    const { getA1Val, getRowColVal } = new SheetHelpers(
-      sheet
-    )
+    const {
+      getA1Val,
+      getRowColVal,
+      logToCol,
+      logToRow,
+    } = new SheetHelpers(sheet)
+
     const pixelsPerInch = getA1Val(A1_pixelsPerInch)
 
     const numFrozenCols = sheet.getFrozenColumns()
@@ -21,30 +26,32 @@ function refreshLayoutStripWidths() {
 
     /// COLUMNS:
     for (
-      let colNum = numFrozenCols + 1;
-      colNum <= colCount;
-      colNum++
+      let col = numFrozenCols + 1;
+      col <= colCount;
+      col++
     ) {
-      const inches = getRowColVal(WIDTHS_ROW_NUM, colNum)
+      const inches = getRowColVal(WIDTHS_ROW, col)
       if (inches) {
         const pixels = inches * pixelsPerInch
-        sheet.setColumnWidth(colNum, pixels)
+        sheet.setColumnWidth(col, pixels)
       }
+      logToCol(col, `inches: ${inches}`)
     }
 
     /// ROWS:
     const numFrozenRows = sheet.getFrozenRows()
     const rowCount = sheet.getMaxRows()
     for (
-      let rowNum = numFrozenRows + 1;
-      rowNum <= rowCount;
-      rowNum++
+      let row = numFrozenRows + 1;
+      row <= rowCount;
+      row++
     ) {
-      const inches = getRowColVal(WIDTHS_COL_NUM, rowNum)
+      const inches = getRowColVal(WIDTHS_COL, row)
       if (inches) {
         const pixels = inches * pixelsPerInch
-        sheet.setRowHeight(rowNum, pixels)
+        sheet.setRowHeight(row, pixels)
       }
+      logToRow(row, `inches: ${inches}`)
     }
   })
 }
@@ -67,5 +74,11 @@ function SheetHelpers(sheet) {
   return {
     getA1Val: (a1) => sheet.getRange(a1).getValue(),
     getRowColVal: (y, x) => sheet.getRange(y, x).getValue(),
+    logToCol: (col, msg) => {
+      sheet.getRange(LOG_ROW, col).setValue(msg)
+    },
+    logToRow: (row, msg) => {
+      sheet.getRange(row, LOG_COL).setValue(msg)
+    },
   }
 }
