@@ -36,6 +36,7 @@ function refreshLayoutStripWidths() {
         const pixels = inches * pixelsPerInch
         sheet.setColumnWidth(col, pixels)
         msg += `inches: ${inches}. `
+        msg += `pixels: ${pixels}. `
       } else {
         msg += 'no width. '
       }
@@ -56,6 +57,7 @@ function refreshLayoutStripWidths() {
         const pixels = inches * pixelsPerInch
         sheet.setRowHeight(row, pixels)
         msg += `inches: ${inches}. `
+        msg += `pixels: ${pixels}. `
       } else {
         msg += 'no width. '
       }
