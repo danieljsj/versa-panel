@@ -9,6 +9,20 @@ const DEFAULT_CELL_INCHES = 7
 const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYOUT:'
 
 // eslint-disable-next-line
+function onOpen() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet()
+  const menuItem =
+    'Refresh Layout Display to Match Specified Widths'
+  const entries = [
+    {
+      name: menuItem,
+      functionName: 'refreshLayoutStripWidths',
+    },
+  ]
+  ss.addMenu('REFRESH!', entries)
+}
+
+// eslint-disable-next-line
 function refreshLayoutStripWidths() {
   // // just going to do one for now.
   // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
@@ -27,20 +41,6 @@ function refreshLayoutStripWidths() {
       `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
     )
   }
-}
-
-// eslint-disable-next-line
-function onOpen() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet()
-  const menuItem =
-    'Refresh Layout Display to Match Specified Widths'
-  const entries = [
-    {
-      name: menuItem,
-      functionName: 'refreshLayoutStripWidths',
-    },
-  ]
-  ss.addMenu('REFRESH!', entries)
 }
 
 function refreshSheetLayoutStripWidths(sheet) {
