@@ -92,5 +92,5 @@ function SheetHelpers(sheet) {
 }
 
 function now() {
-  return new Date().toTimeString()
+  return `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
 }
