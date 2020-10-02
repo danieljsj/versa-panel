@@ -30,14 +30,14 @@ function refreshLayoutStripWidths() {
       col <= colCount;
       col++
     ) {
-      let msg = ''
+      let msg = `${now()}: `
       const inches = getRowColVal(WIDTHS_ROW, col)
       if (inches) {
         const pixels = inches * pixelsPerInch
         sheet.setColumnWidth(col, pixels)
-        msg += `inches: ${inches}`
+        msg += `inches: ${inches}. `
       } else {
-        msg += 'no width'
+        msg += 'no width. '
       }
       logToCol(col, msg)
     }
@@ -50,14 +50,14 @@ function refreshLayoutStripWidths() {
       row <= rowCount;
       row++
     ) {
-      let msg = ''
+      let msg = `${now()}: `
       const inches = getRowColVal(WIDTHS_COL, row)
       if (inches) {
         const pixels = inches * pixelsPerInch
         sheet.setRowHeight(row, pixels)
-        msg += `inches: ${inches}`
+        msg += `inches: ${inches}. `
       } else {
-        msg += 'no width'
+        msg += 'no width. '
       }
       logToRow(row, msg)
     }
@@ -89,4 +89,8 @@ function SheetHelpers(sheet) {
       sheet.getRange(row, LOG_COL).setValue(msg)
     },
   }
+}
+
+function now() {
+  return new Date().toTimeString()
 }
