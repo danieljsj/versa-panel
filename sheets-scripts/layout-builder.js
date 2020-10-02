@@ -36,7 +36,7 @@ function refreshLayoutStripWidths() {
       /// SAME ///
       if (inches) {
         msg += `inches: ${inches}. `
-        msg += `pixels: ${pixels}. `
+        msg += `pixels: ${inches * pixelsPerInch}. `
       } else {
         msg += 'no width. '
         inches = DEFAULT_CELL_INCHES
@@ -60,7 +60,7 @@ function refreshLayoutStripWidths() {
       /// SAME ///
       if (inches) {
         msg += `inches: ${inches}. `
-        msg += `pixels: ${pixels}. `
+        msg += `pixels: ${inches * pixelsPerInch}. `
       } else {
         msg += 'no width. '
         inches = DEFAULT_CELL_INCHES
