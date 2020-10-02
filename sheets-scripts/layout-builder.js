@@ -8,69 +8,14 @@ const DEFAULT_CELL_INCHES = 7
 
 // eslint-disable-next-line
 function refreshLayoutStripWidths() {
-  const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
-    .getSheets()
-    .filter((sheet) => sheet.getName().match(/LAYOUT:/))
+  // // just going to do one for now.
+  // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
+  //   .getSheets()
+  //   .filter((sheet) => sheet.getName().match(/LAYOUT:/))
 
-  layoutSheets.forEach((sheet) => {
-    const {
-      getA1Val,
-      getRowColVal,
-      logToCol,
-      logToRow,
-    } = new SheetHelpers(sheet)
+  // layoutSheets.forEach()
 
-    const pixelsPerInch = getA1Val(A1_pixelsPerInch)
-
-    const numFrozenCols = sheet.getFrozenColumns()
-    const colCount = sheet.getMaxColumns()
-
-    /// COLUMNS:
-    for (
-      let col = numFrozenCols + 1;
-      col <= colCount;
-      col++
-    ) {
-      let msg = ''
-      let inches = getRowColVal(WIDTHS_ROW, col)
-      /// SAME ///
-      if (inches) {
-        msg += `inches: ${inches}. `
-        msg += `pixels: ${inches * pixelsPerInch}. `
-      } else {
-        msg += 'no width. '
-        inches = DEFAULT_CELL_INCHES
-      }
-      /// END SAME ///
-      const pixels = inches * pixelsPerInch
-      sheet.setColumnWidth(col, pixels)
-      logToCol(col, msg + ` (${now()})`)
-    }
-
-    /// ROWS:
-    const numFrozenRows = sheet.getFrozenRows()
-    const rowCount = sheet.getMaxRows()
-    for (
-      let row = numFrozenRows + 1;
-      row <= rowCount;
-      row++
-    ) {
-      let msg = ''
-      let inches = getRowColVal(row, WIDTHS_COL)
-      /// SAME ///
-      if (inches) {
-        msg += `inches: ${inches}. `
-        msg += `pixels: ${inches * pixelsPerInch}. `
-      } else {
-        msg += 'no width. '
-        inches = DEFAULT_CELL_INCHES
-      }
-      /// END SAME ///
-      const pixels = inches * pixelsPerInch
-      sheet.setRowHeight(row, pixels)
-      logToRow(row, msg + ` (${now()})`)
-    }
-  })
+  refreshSheetLayoutStripWidths(sheet)
 }
 
 // eslint-disable-next-line
@@ -85,6 +30,66 @@ function onOpen() {
     },
   ]
   ss.addMenu('REFRESH!', entries)
+}
+
+function refreshSheetLayoutStripWidths(sheet) {
+  const {
+    getA1Val,
+    getRowColVal,
+    logToCol,
+    logToRow,
+  } = new SheetHelpers(sheet)
+
+  const pixelsPerInch = getA1Val(A1_pixelsPerInch)
+
+  const numFrozenCols = sheet.getFrozenColumns()
+  const colCount = sheet.getMaxColumns()
+
+  /// COLUMNS:
+  for (
+    let col = numFrozenCols + 1;
+    col <= colCount;
+    col++
+  ) {
+    let msg = ''
+    let inches = getRowColVal(WIDTHS_ROW, col)
+    /// SAME ///
+    if (inches) {
+      msg += `inches: ${inches}. `
+      msg += `pixels: ${inches * pixelsPerInch}. `
+    } else {
+      msg += 'no width. '
+      inches = DEFAULT_CELL_INCHES
+    }
+    /// END SAME ///
+    const pixels = inches * pixelsPerInch
+    sheet.setColumnWidth(col, pixels)
+    logToCol(col, msg + ` (${now()})`)
+  }
+
+  /// ROWS:
+  const numFrozenRows = sheet.getFrozenRows()
+  const rowCount = sheet.getMaxRows()
+  for (
+    let row = numFrozenRows + 1;
+    row <= rowCount;
+    row++
+  ) {
+    let msg = ''
+    let inches = getRowColVal(row, WIDTHS_COL)
+    /// SAME ///
+    if (inches) {
+      msg += `inches: ${inches}. `
+      msg += `pixels: ${inches * pixelsPerInch}. `
+    } else {
+      msg += 'no width. '
+      inches = DEFAULT_CELL_INCHES
+    }
+    /// END SAME ///
+    const pixels = inches * pixelsPerInch
+    sheet.setRowHeight(row, pixels)
+    logToRow(row, msg + ` (${now()})`)
+  }
 }
 
 function SheetHelpers(sheet) {
