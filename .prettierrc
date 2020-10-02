@@ -1,0 +1,24 @@
+{
+  "useTabs": false,
+  "printWidth": 60,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "jsxBracketSameLine": false,
+  "semi": false,
+  "rcVerbose": true,
+  "overrides": [
+    {
+      "files": ".prettierrc",
+      "options": {
+        "parser": "json"
+      }
+    },
+    {
+      "files": "*.js",
+      "options": {
+        "parser": "babel"
+      }
+    }
+  ]
+}
