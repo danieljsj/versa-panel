@@ -3,20 +3,8 @@ const WIDTHS_ROW = 9
 const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
 const LOG_COL = LOG_ROW
-const A1_pixelsPerInch = 'H6'
+const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
-
-// eslint-disable-next-line
-function refreshLayoutStripWidths() {
-  // // just going to do one for now.
-  // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
-  //   .getSheets()
-  //   .filter((sheet) => sheet.getName().match(/LAYOUT:/))
-
-  // layoutSheets.forEach()
-
-  refreshSheetLayoutStripWidths(sheet)
-}
 
 // eslint-disable-next-line
 function onOpen() {
@@ -30,6 +18,18 @@ function onOpen() {
     },
   ]
   ss.addMenu('REFRESH!', entries)
+}
+
+// eslint-disable-next-line
+function refreshLayoutStripWidths() {
+  // // just going to do one for now.
+  // const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
+  //   .getSheets()
+  //   .filter((sheet) => sheet.getName().match(/LAYOUT:/))
+
+  // layoutSheets.forEach()
+
+  refreshSheetLayoutStripWidths(sheet)
 }
 
 function refreshSheetLayoutStripWidths(sheet) {
@@ -51,7 +51,7 @@ function refreshSheetLayoutStripWidths(sheet) {
     col <= colCount;
     col++
   ) {
-    let msg = ''
+    let msg = `(@${now()})`
     let inches = getRowColVal(WIDTHS_ROW, col)
     /// SAME ///
     if (inches) {
@@ -64,7 +64,7 @@ function refreshSheetLayoutStripWidths(sheet) {
     /// END SAME ///
     const pixels = inches * pixelsPerInch
     sheet.setColumnWidth(col, pixels)
-    logToCol(col, msg + ` (${now()})`)
+    logToCol(col, msg)
   }
 
   /// ROWS:
@@ -75,7 +75,7 @@ function refreshSheetLayoutStripWidths(sheet) {
     row <= rowCount;
     row++
   ) {
-    let msg = ''
+    let msg = `(@${now()})`
     let inches = getRowColVal(row, WIDTHS_COL)
     /// SAME ///
     if (inches) {
@@ -88,7 +88,7 @@ function refreshSheetLayoutStripWidths(sheet) {
     /// END SAME ///
     const pixels = inches * pixelsPerInch
     sheet.setRowHeight(row, pixels)
-    logToRow(row, msg + ` (${now()})`)
+    logToRow(row, msg)
   }
 }
 
