@@ -6,6 +6,7 @@ const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
 const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYOUT:'
+const MIN_WIDTH = 21
 
 // eslint-disable-next-line
 function onOpen() {
@@ -68,16 +69,18 @@ function refreshSheetLayoutStripWidths(sheet) {
   ) {
     let msg = `(@${now()})`
     let inches = getRowColVal(WIDTHS_ROW, col)
-    /// SAME ///
+    /// SAME!!!!!!!!!!!!!! ///
     if (inches) {
       msg += `inches: ${inches}. `
-      msg += `pixels: ${inches * pixelsPerInch}. `
     } else {
-      msg += 'no width. '
       inches = DEFAULT_CELL_INCHES
     }
-    /// END SAME ///
-    const pixels = inches * pixelsPerInch
+    const pixels = Math.max(
+      inches * pixelsPerInch,
+      MIN_WIDTH
+    )
+    msg += `pixels: ${pixels}. `
+    /// END SAME!!!!!!!!!!! ///
     sheet.setColumnWidth(col, pixels)
     logToCol(col, msg)
   }
@@ -92,16 +95,19 @@ function refreshSheetLayoutStripWidths(sheet) {
   ) {
     let msg = `(@${now()})`
     let inches = getRowColVal(row, WIDTHS_COL)
-    /// SAME ///
+    /// SAME!!!!!!!!!!!!!! ///
     if (inches) {
       msg += `inches: ${inches}. `
-      msg += `pixels: ${inches * pixelsPerInch}. `
     } else {
-      msg += 'no width. '
       inches = DEFAULT_CELL_INCHES
     }
-    /// END SAME ///
-    const pixels = inches * pixelsPerInch
+    const pixels = Math.max(
+      inches * pixelsPerInch,
+      MIN_WIDTH
+    )
+    msg += `pixels: ${pixels}. `
+    /// END SAME!!!!!!!!!!! ///
+
     sheet.setRowHeight(row, pixels)
     logToRow(row, msg)
   }
@@ -123,8 +129,6 @@ function SheetHelpers(sheet) {
 function now() {
   return `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
 }
-
-function onOpen() {}
 
 // eslint-disable-next-line
 function showAlert() {
