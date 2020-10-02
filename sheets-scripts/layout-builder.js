@@ -4,13 +4,13 @@ const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'H6'
-const DEFAULT_CELL_INCHES = 3.5
+const DEFAULT_CELL_INCHES = 7
 
 // eslint-disable-next-line
 function refreshLayoutStripWidths() {
   const layoutSheets = SpreadsheetApp.getActiveSpreadsheet()
     .getSheets()
-    .filter((sheet) => sheet.getName().match(/^LAYOUT:/))
+    .filter((sheet) => sheet.getName().match(/LAYOUT:/))
 
   layoutSheets.forEach((sheet) => {
     const {
