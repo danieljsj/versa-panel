@@ -42,12 +42,7 @@ function refreshLayoutStripWidths() {
     refreshSheetLayoutStripWidths(sheet)
   } else {
     // eslint-disable-next-line
-    // alert(
-    //   `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
-    // )
-
-    // eslint-disable-next-line
-    aSheetNameWhoseTextContainsLAYER_()
+    aSheetNameWhoseTextContainsLAYER_() // originally: `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
   }
 }
 
