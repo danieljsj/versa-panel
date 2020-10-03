@@ -47,7 +47,7 @@ function refreshLayoutStripWidths() {
     // )
 
     // eslint-disable-next-line
-    aSheetNameContainingTheWordLAYER_()
+    aSheetNameWhoseTextContainsLAYER_()
   }
 }
 
