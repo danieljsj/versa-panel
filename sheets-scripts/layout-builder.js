@@ -5,7 +5,7 @@ const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
-const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYER:'
+const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYER_' // 'LAYER_' also hardcoded below
 const MIN_WIDTH = 21
 
 // eslint-disable-next-line
@@ -47,7 +47,7 @@ function refreshLayoutStripWidths() {
     // )
 
     // eslint-disable-next-line
-    aSheetNameContainingTheWordLAYER()
+    aSheetNameContainingTheWordLAYER_()
   }
 }
 
@@ -87,15 +87,6 @@ function refreshSheetLayoutStripWidths(sheet) {
     msg += `pixels: ${pixels}. `
     /// END SAME!!!!!!!!!!! ///
     sheet.setColumnWidth(col, pixels)
-    // COMING SOON / COMEBACK:
-    // sheet
-    //   .getRange({
-    //     row: numFrozenRows + 1,
-    //     column: col,
-    //     numRows: rowCount - numFrozenRows,
-    //     numColumns: 1,
-    //   })
-    //   .setTextRotation(-90)
     logToCol(col, msg)
   }
 
@@ -162,3 +153,13 @@ function showAlert() {
     ui.alert('Permission denied.')
   }
 }
+
+// THIS WASNT WORKING... BUT IT MIGHT BE USEFUL LATER
+// sheet
+//   .getRange({
+//     row: numFrozenRows + 1,
+//     column: col,
+//     numRows: rowCount - numFrozenRows,
+//     numColumns: 1,
+//   })
+//   .setTextRotation(-90)
