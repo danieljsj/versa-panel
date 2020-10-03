@@ -67,9 +67,9 @@ function refreshSheetLayoutStripWidths(sheet) {
     col <= colCount;
     col++
   ) {
-    let msg = `(@${now()})`
     let inches = getRowColVal(WIDTHS_ROW, col)
     /// SAME!!!!!!!!!!!!!! ///
+    let msg = `${now()}: `
     if (inches) {
       msg += `inches: ${inches}. `
     } else {
@@ -91,9 +91,9 @@ function refreshSheetLayoutStripWidths(sheet) {
     row <= rowCount;
     row++
   ) {
-    let msg = `(@${now()})`
     let inches = getRowColVal(row, WIDTHS_COL)
     /// SAME!!!!!!!!!!!!!! ///
+    let msg = `${now()}: `
     if (inches) {
       msg += `inches: ${inches}. `
     } else {
