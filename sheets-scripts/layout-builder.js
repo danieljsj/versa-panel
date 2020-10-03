@@ -5,7 +5,7 @@ const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
-const LAYOUT_SHEET_NAME_MATCH_STR = 'DESIGN:'
+const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYER:'
 const MIN_WIDTH = 21
 
 // eslint-disable-next-line
@@ -42,9 +42,12 @@ function refreshLayoutStripWidths() {
     refreshSheetLayoutStripWidths(sheet)
   } else {
     // eslint-disable-next-line
-    alert(
-      `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
-    ) // doesn't work... but at least throws an error msg haha
+    // alert(
+    //   `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
+    // )
+
+    // eslint-disable-next-line
+    aSheetNameContainingTheWordLAYER()
   }
 }
 
@@ -84,14 +87,15 @@ function refreshSheetLayoutStripWidths(sheet) {
     msg += `pixels: ${pixels}. `
     /// END SAME!!!!!!!!!!! ///
     sheet.setColumnWidth(col, pixels)
-    sheet
-      .getRange({
-        row: numFrozenRows + 1,
-        column: col,
-        numRows: rowCount - numFrozenRows,
-        numColumns: 1,
-      })
-      .setTextRotation(-90)
+    // COMING SOON / COMEBACK:
+    // sheet
+    //   .getRange({
+    //     row: numFrozenRows + 1,
+    //     column: col,
+    //     numRows: rowCount - numFrozenRows,
+    //     numColumns: 1,
+    //   })
+    //   .setTextRotation(-90)
     logToCol(col, msg)
   }
 
@@ -138,6 +142,7 @@ function now() {
   return `${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`
 }
 
+// NOT WORKING?????
 // eslint-disable-next-line
 function showAlert() {
   var ui = SpreadsheetApp.getUi() // Same variations.
