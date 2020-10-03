@@ -5,7 +5,7 @@ const LOG_ROW = 7
 const LOG_COL = LOG_ROW
 const A1_pixelsPerInch = 'I6'
 const DEFAULT_CELL_INCHES = 7
-const LAYOUT_SHEET_NAME_MATCH_STR = 'LAYER_' // 'LAYER_' also hardcoded below
+const LAYER_SHEET_NAME_MATCH_STR = 'LAYER_' // 'LAYER_' also hardcoded below
 const MIN_WIDTH = 21
 
 // eslint-disable-next-line
@@ -38,11 +38,11 @@ function refreshLayoutStripWidths() {
 
   const sheet = SpreadsheetApp.getActiveSheet()
 
-  if (sheet.getName().match(LAYOUT_SHEET_NAME_MATCH_STR)) {
+  if (sheet.getName().match(LAYER_SHEET_NAME_MATCH_STR)) {
     refreshSheetLayoutStripWidths(sheet)
   } else {
     // eslint-disable-next-line
-    aSheetNameWhoseTextContainsLAYER_() // originally: `Refresh canceled; Design tabs must contain "${LAYOUT_SHEET_NAME_MATCH_STR}" in their title.`
+    aSheetNameWhoseTextContainsLAYER_() // originally: `Refresh canceled; Design tabs must contain "${LAYER_SHEET_NAME_MATCH_STR}" in their title.`
   }
 }
 
@@ -147,6 +147,26 @@ function showAlert() {
     // User clicked "No" or X in the title bar.
     ui.alert('Permission denied.')
   }
+}
+
+/*** return sheet names for active document (DID THIS MESSAGE SHOW UP???? ARE YOU READING THIS???)
+ * @customfunction
+ */
+function sheetNames() {
+  return SpreadsheetApp.getActiveSpreadsheet()
+    .getSheets()
+    .map(function (sheet) {
+      return sheet.getName()
+    })
+}
+/*** return LAYER sheet names for active document (DID THIS MESSAGE SHOW UP???? ARE YOU READING THIS???)
+ * @customfunction
+ */
+//eslint-disable-next-line
+function layerSheetNames() {
+  return sheetNames.filter((sheetName) =>
+    sheetName.match(LAYER_SHEET_NAME_MATCH_STR)
+  )
 }
 
 // THIS WASNT WORKING... BUT IT MIGHT BE USEFUL LATER
