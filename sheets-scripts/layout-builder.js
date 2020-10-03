@@ -3,7 +3,8 @@ const WIDTHS_ROW = 9
 const WIDTHS_COL = WIDTHS_ROW
 const LOG_ROW = 7
 const LOG_COL = LOG_ROW
-const A1_pixelsPerInch = 'I3'
+const A1_zoom = 'J3'
+const PIXELS_PER_INCH_PER_ZOOM = 10
 const DEFAULT_CELL_INCHES = 7
 const LAYER_SHEET_NAME_MATCH_STR = 'LAYER_' // 'LAYER_' also hardcoded below
 const MIN_WIDTH = 21
@@ -53,8 +54,8 @@ function refreshSheetLayoutStripWidths(sheet) {
     logToCol,
     logToRow,
   } = new SheetHelpers(sheet)
-
-  const pixelsPerInch = getA1Val(A1_pixelsPerInch)
+  const zoom = getA1Val(A1_zoom)
+  const pixelsPerInch = zoom * PIXELS_PER_INCH_PER_ZOOM
 
   const rowCount = sheet.getMaxRows()
   const colCount = sheet.getMaxColumns()
